@@ -9,6 +9,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var itemsRouter = require('./routes/items');
 var authenRouter = require('./routes/authen');
+var departmentRouter = require('./routes/department');
 
 var app = express();
 
@@ -26,7 +27,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/items',itemsRouter);
 app.use('/authen',authenRouter);
-
+app.use('/departments',departmentRouter)
 mongoose.connect("mongodb://127.0.0.1:27017/TestS2");
 mongoose.connection.once('open', function(){
   console.log("thanh cong");

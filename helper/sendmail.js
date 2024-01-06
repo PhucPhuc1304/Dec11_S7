@@ -19,7 +19,7 @@ module.exports = {
             from: 'iamasystemadmin@gmail.com',
             to: email,
             subject: 'THU NAY DE RESET PASS',
-            html: '<a href=/authen/resetPassword/'+message+'>bam vao day de doi mat khau</a>',
+            html: '<a href=http://localhost:3000//authen/resetPassword/'+message+'>bam vao day de doi mat khau</a>',
         })
     },
 }

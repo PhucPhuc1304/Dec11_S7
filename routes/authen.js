@@ -112,14 +112,32 @@ async function(req, res, next) {
 }
 );
 
-router.post('/resetPassword/:token', async function(req, res, next){
-   var token = req.params.token;
-   var password = req.body.password;
-   var user = await modelUser.getByTokenForgot(token);
-   user.password = password;
-   user.tokenForgot = undefined;
-   user.tokenForgotExp = undefined;
-   await user.save();
-})
+router.post('/resetPassword/:token', async function(req, res, next) {
+  try {
+    const token = req.params.token;
+    const password = req.body.password;
+
+    if (!token || !password) {
+      return responseData.responseReturn(res, 400, false, 'Dữ liệu đầu vào không đầy đủ');
+    }
+
+    const user = await modelUser.getByTokenForgot(token);
+
+    if (!user) {
+      return responseData.responseReturn(res, 404, false, 'Không tìm thấy người dùng với token đã cung cấp');
+    }
+
+    user.password = password;
+    user.tokenForgot = undefined;
+    user.tokenForgotExp = undefined;
+
+    await user.save();
+
+    responseData.responseReturn(res, 200, true, 'Đặt lại mật khẩu thành công');
+  } catch (error) {
+    responseData.responseReturn(res, 500, false, 'Lỗi server', error);
+  }
+});
+
 
 module.exports = router;
